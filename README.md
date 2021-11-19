@@ -1,3 +1,11 @@
+# Prerequisites
+You will need the following to use this repository to try out Airflow.
+
+1. **Linux**. If you are on Windows 10, see [Using Linux on Windows 10](#using-linux-on-windows-10)
+
+1. **Docker**
+1. **Docker Compose**
+1. **AWS**. This is only required if you want to make full use of the DAGs that write to and from Amazon S3. AWS has an extensive free-tier if you want to make an account. Otherwise, you can simply use your local filesystem.
 # Quick Start
 If you already have recent enough versions of Docker and Docker Compose installed, and you have access to a Linux kernel, you can jump right in with the following steps. Otherwise, see [Setting Up Docker and Docker Compose](#setting-up-docker-and-docker-compose) for installing the prerequisites.
 
@@ -36,11 +44,20 @@ You can follow the progress of `docker-compose up` in your terminal, where Docke
 airflow-webserver_1  | 127.0.0.1 - - [19/Nov/2021:07:41:39 +0000] "GET /health HTTP/1.1" 200 187 "-" "curl/7.64.0"
 airflow-webserver_1  | 127.0.0.1 - - [19/Nov/2021:07:42:09 +0000] "GET /health HTTP/1.1" 200 187 "-" "curl/7.64.0"
 ```
+## Using the Airflow Web UI
+
  You can verify that Airflow is ready by navigating to http://localhost:8080 in your web browser. You should see the Airflow Web UI. Sign in with the credentials below
 
  > **username:** airflow
  >
  > **password:** airflow
+
+When you first sign-in, you should go to `Admin > Connections` in the navbar. Click the "plus" button to add the following connections:
+
+| Connection Id      | Connection Type |Host      | Schema | Login     | Password |Port      | Extra |
+| ----------- | ----------- |----------- | ----------- |----------- | ----------- |----------- | ----------- |
+| data_warehouse      | postgres       |data-warehouse      | postgres       |airflow      | airflow       |5432      |        |
+| local_spark_cluster   | spark        |spark://spark     |        |      |        |7077     | {"spark_home": "/home/airflow/.local/lib/python3.7/site-packages/pyspark/"}       |
 
 # Setting Up Docker and Docker Compose
 ## Using Linux on Windows 10
