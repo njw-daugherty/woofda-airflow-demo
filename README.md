@@ -1,10 +1,48 @@
 # Quick Start
-If you already have recent enough versions of Docker and Docker Compose installed, you can jump right in with the following steps. Otherwise, see below for installing the prerequisites.
-1. Clone this repository to your local file system (note: this must be a Linux file system!)
-    ```bash
-    yourname@YOURMACHINE:/home/yourname$ git clone
+If you already have recent enough versions of Docker and Docker Compose installed, and you have access to a Linux kernel, you can jump right in with the following steps. Otherwise, see [Setting Up Docker and Docker Compose](#setting-up-docker-and-docker-compose) for installing the prerequisites.
+
+1. Clone this repository to your local file system (note: this must be a Linux file system!). The below command will clone the repository to a directory named `woofda-airflow-demo`:
+
     ```
-# Set-Up
+    $ git clone https://github.com/njw-daugherty/woofda-airflow-demo.git
+    ```
+
+1. Navigate into the newly created directory
+    ```
+    $ cd woofda-airflow-demo
+    ```
+1. Run the following commands to make some directories that will be mounted as volumes to your Docker containers. **Do not prefex this command with `sudo`**.
+
+    ```
+    $ mkdir -p ./dags ./logs ./plugins ./output ./jars_dir 
+    ```
+
+1. Run the below command to get your current user id, and make sure the `AIRFLOW_UID` is set to this value in the `.env` file. Your user id is probably `1000`, in which case you do not need to make any changes.
+    ```
+    $ id -u
+    ```
+
+1. Finally, bring up all the Docker containers using Docker Compose 
+    
+    ```
+    $ docker-compose up
+    ```
+
+The first time you run `docker-compose up`, Docker will need to build all the images from scratch. This may take a while. Subsequent calls to `docker-compose up` should proceed much more quickly.
+
+You can follow the progress of `docker-compose up` in your terminal, where Docker Compose emits all the logs from the containers it is starting. You can tell the containers are done building by looking for the health request checks from the webserver. They will look something like this:
+
+```
+airflow-webserver_1  | 127.0.0.1 - - [19/Nov/2021:07:41:39 +0000] "GET /health HTTP/1.1" 200 187 "-" "curl/7.64.0"
+airflow-webserver_1  | 127.0.0.1 - - [19/Nov/2021:07:42:09 +0000] "GET /health HTTP/1.1" 200 187 "-" "curl/7.64.0"
+```
+ You can verify that Airflow is ready by navigating to http://localhost:8000 in your web browser. You should see the Airflow Web UI. Sign in with the credentials below
+
+ > **username:** airflow
+ >
+ > **password:** airflow
+
+# Setting Up Docker and Docker Compose
 ## Using Linux on Windows 10
 Apache Airflow, like many other open-source technologies, only runs on Linux. If you try to run it *natively* on Windows, it will fail. You can, however, run it using Microsoft's virtualization of the Linux kernal, [Windows Subsystem for Linux 2 (WSL2)](https://docs.microsoft.com/en-us/windows/wsl/about). Installing and configuring WSL2 is relatively straightforward; you can find instructions [here](https://docs.microsoft.com/en-us/windows/wsl/install).
 ## Installing Docker and Docker Compose
@@ -64,14 +102,4 @@ If you do not wish to use Docker Desktop (which is understandable considering ho
     $ sudo chmod +x /usr/local/bin/docker-compose
     ```
 
-
-
-
-
-
-
-
-```
-mkdir -p ./dags ./logs ./plugins ./output ./jars_dir
-echo -e "AIRFLOW_UID=$(id -u)" > .env
-```
+Once you've completed the installation of Docker and Docker Compose, follow the directions in the [Quickstart](#quick-start).
