@@ -37,12 +37,12 @@ def get_articles(ds: str, subject_keyword: str, s3_key: str, bucket: str, conn_i
         os.mkdir(file_path)
 
 
-    with open(file_path + "articles-{}.json".format(cleaned_subject_name), "w+") as json_file:
+    with open(file_path + "articles-{}.json".format(ds), "w+") as json_file:
         json.dump([article for article in articles], json_file)
 
     
 
     hook = S3Hook(aws_conn_id=conn_id)
     hook.load_file(
-        file_path, s3_key, bucket_name=bucket,  replace=True, acl_policy="public-read"
+        file_path + "articles-{}.json".format(ds), s3_key, bucket_name=bucket,  replace=True, acl_policy="public-read"
     )

@@ -1,22 +1,23 @@
-CREATE TABLE IF NOT EXISTS staging.publisher_{{ ts_nodash  }}_{{ params.subject }} (
+CREATE TABLE IF NOT EXISTS production.publisher (
     publisher_id SERIAL PRIMARY KEY,
     publisher_name VARCHAR NOT NULL    
 );
 
-CREATE TABLE IF NOT EXISTS staging.journal_{{ ts_nodash  }}_{{ params.subject }} (
+CREATE TABLE IF NOT EXISTS production.journal (
     journal_id SERIAL PRIMARY KEY,
     journal_name VARCHAR NOT NULL    
 );
 
-CREATE TABLE IF NOT EXISTS staging.author_{{ ts_nodash  }}_{{ params.subject }} (
+CREATE TABLE IF NOT EXISTS production.author (
     author_id SERIAL PRIMARY KEY,
     given_name VARCHAR NOT NULL,
     family_name VARCHAR NOT NULL,
     organization VARCHAR,
-    orc_id VARCHAR    
+    orc_id VARCHAR,
+    UNIQUE(given_name, family_name, orc_id)    
 );
 
-CREATE TABLE IF NOT EXISTS staging.articles_{{ ts_nodash  }}_{{ params.subject }} (
+CREATE TABLE IF NOT EXISTS production.articles (
     article_id SERIAL PRIMARY KEY,
     title VARCHAR NOT NULL,
     doi VARCHAR NOT NULL,
