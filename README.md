@@ -36,7 +36,7 @@ You can follow the progress of `docker-compose up` in your terminal, where Docke
 airflow-webserver_1  | 127.0.0.1 - - [19/Nov/2021:07:41:39 +0000] "GET /health HTTP/1.1" 200 187 "-" "curl/7.64.0"
 airflow-webserver_1  | 127.0.0.1 - - [19/Nov/2021:07:42:09 +0000] "GET /health HTTP/1.1" 200 187 "-" "curl/7.64.0"
 ```
- You can verify that Airflow is ready by navigating to http://localhost:8000 in your web browser. You should see the Airflow Web UI. Sign in with the credentials below
+ You can verify that Airflow is ready by navigating to http://localhost:8080 in your web browser. You should see the Airflow Web UI. Sign in with the credentials below
 
  > **username:** airflow
  >
